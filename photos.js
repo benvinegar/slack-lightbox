@@ -3,6 +3,7 @@
   script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822&user_id=69711006%40N07&format=json';
 
   var activeImg;
+  
   window.jsonFlickrApi = function (data) {
     if (data.stat !== 'ok')
       return; // TODO: throw error
@@ -18,32 +19,34 @@
     });
 
     activeImg = document.querySelector('img');
-    activeImg.style.display = 'block';
-    activeImg.classList.add('bg');
+    enable(activeImg);
+  }
+
+  function enable(img) {
+    img.style.display = 'block';
+    img.classList.add('bg');
+  }
+
+  function disable(img) {
+    img.style.display = 'none';
+    img.classList.remove('bg');
   }
 
   function next() {
     var nextImg = activeImg.nextSibling;
-    activeImg.style.display = 'none';
-    activeImg.classList.remove('bg');
-
-    nextImg.style.display = 'block';
-    nextImg.classList.add('bg');
+    disable(activeImg);
+    enable(nextImg);
     activeImg = nextImg;
   };
 
   function prev() {
     var prevImg = activeImg.previousSibling;
-    activeImg.style.display = 'none';
-    activeImg.classList.remove('bg');
-
-    prevImg.style.display = 'block';
-    prevImg.classList.add('bg');
+    disable(activeImg);
+    enable(prevImg);
     activeImg = prevImg;
   }
 
   var body = document.body;
-
   document.body.appendChild(script);
 
   var LEFT = 37,
