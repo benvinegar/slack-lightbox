@@ -9,8 +9,6 @@
       return; // TODO: throw error
 
     var photos = data.photoset.photo;
-    allPhotos = photos.slice(0, 20);
-
     photos.slice(0, 20).forEach(function (photo) {
       var img = document.createElement('img');
       img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_b.jpg';
@@ -32,14 +30,14 @@
   }
 
   function next() {
-    var nextImg = activeImg.nextSibling;
+    var nextImg = activeImg.nextSibling || document.querySelector('#images img:first-child');
     disable(activeImg);
     enable(nextImg);
     activeImg = nextImg;
   };
 
   function prev() {
-    var prevImg = activeImg.previousSibling;
+    var prevImg = activeImg.previousSibling || document.querySelector('#images img:last-child');
     disable(activeImg);
     enable(prevImg);
     activeImg = prevImg;
