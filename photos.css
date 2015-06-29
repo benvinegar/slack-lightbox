@@ -1,15 +1,14 @@
-/* borrowed from https://css-tricks.com/perfect-full-page-background-image/ */
-img.bg {
-  /* Set rules to fill background */
-  min-height: 100%;
-  min-width: 1024px;
-  
-  /* Set up proportionate scaling */
-  width: 100%;
-  height: auto;
-  
-  /* Set up positioning */
-  position: fixed;
-  top: 0;
+body {
+  background-color: #000;
+}
+#images img {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
   left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
 }

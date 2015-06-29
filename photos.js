@@ -3,7 +3,7 @@
   script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822&user_id=69711006%40N07&format=json';
 
   var activeImg;
-  
+
   window.jsonFlickrApi = function (data) {
     if (data.stat !== 'ok')
       return; // TODO: throw error
@@ -15,7 +15,9 @@
       var img = document.createElement('img');
       img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_b.jpg';
       img.style.display = 'none';
-      document.body.appendChild(img);
+
+      var target = document.querySelector('#images');
+      target.appendChild(img);
     });
 
     activeImg = document.querySelector('img');
