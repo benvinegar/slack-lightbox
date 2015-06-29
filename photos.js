@@ -11,6 +11,7 @@
     // pointing at the Flickr API w/ request parameters
     var script = document.createElement('script');
     script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos' +
+      '&per_page=20&page=1' +
       '&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822' +
       '&user_id=69711006%40N07&format=json';
 
@@ -21,7 +22,7 @@
         return; // TODO: throw error
 
       var photos = data.photoset.photo;
-      photos.slice(0, 20).forEach(function (photo) {
+      photos.forEach(function (photo) {
 
         var img = document.createElement('img');
         img.title = photo.title;
