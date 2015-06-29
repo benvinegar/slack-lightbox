@@ -1,17 +1,18 @@
 body {
   background-color: #000;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
 }
 
 #images img {
   max-width: 100%;
-  max-height: 100%;
-  bottom: 0;
+  max-height: 80%;
+  bottom: 10%;
   left: 0;
   margin: auto;
   overflow: auto;
   position: fixed;
   right: 0;
-  top: 0;
+  top: 10%;
 
   opacity: 0;
   transition: opacity 3s ease;
@@ -19,4 +20,16 @@ body {
 
 #images img.active {
   opacity: 1;
+}
+
+#footer {
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 8%;
 }
