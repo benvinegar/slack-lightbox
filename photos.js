@@ -14,7 +14,6 @@
     photos.slice(0, 20).forEach(function (photo) {
       var img = document.createElement('img');
       img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_b.jpg';
-      img.style.display = 'none';
 
       var target = document.querySelector('#images');
       target.appendChild(img);
@@ -25,13 +24,11 @@
   }
 
   function enable(img) {
-    img.style.display = 'block';
-    img.classList.add('bg');
+    img.classList.add('active');
   }
 
   function disable(img) {
-    img.style.display = 'none';
-    img.classList.remove('bg');
+    img.classList.remove('active');
   }
 
   function next() {
