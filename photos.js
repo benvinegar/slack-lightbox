@@ -64,4 +64,8 @@
         break;
     }
   });
+
+  document.body.addEventListener('click', function (e) {
+    next();
+  });
 })(window, document);
