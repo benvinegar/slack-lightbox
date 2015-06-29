@@ -1,37 +1,56 @@
 (function (window, document) {
-  var script = document.createElement('script');
-  script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822&user_id=69711006%40N07&format=json';
 
-  var activeImg;
-  var footer = document.querySelector('#footer');
+  var footer = document.querySelector('#footer'),
 
-  window.jsonFlickrApi = function (data) {
-    if (data.stat !== 'ok')
-      return; // TODO: throw error
+    activeImg; // The photo currently being displayed
 
-    var photos = data.photoset.photo;
-    photos.slice(0, 20).forEach(function (photo) {
-      var img = document.createElement('img');
-      img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_b.jpg';
-      img.title = photo.title;
+  // Request photos from the Flickr API
+  (function requestPhotos() {
 
-      var target = document.querySelector('#images');
-      target.appendChild(img);
-    });
+    // Request is made using JSONP; append script element with src attribute
+    // pointing at the Flickr API w/ request parameters
+    var script = document.createElement('script');
+    script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos' +
+      '&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822' +
+      '&user_id=69711006%40N07&format=json';
 
-    activeImg = document.querySelector('img');
-    enable(activeImg);
-  }
+    // Declare global "jsonFlickrAPI"; the response script returned from the Flickr's servers
+    // will call this function with the API response payload
+    window.jsonFlickrApi = function (data) {
+      if (data.stat !== 'ok')
+        return; // TODO: throw error
 
+      var photos = data.photoset.photo;
+      photos.slice(0, 20).forEach(function (photo) {
+
+        var img = document.createElement('img');
+        img.title = photo.title;
+        img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + 
+          photo.id + '_' + photo.secret + '_b.jpg';
+
+        var target = document.querySelector('#images');
+        target.appendChild(img);
+      });
+
+      activeImg = document.querySelector('img');
+      enable(activeImg);
+    }
+
+    document.body.appendChild(script);
+  })();
+
+  // Make the given image the "active" image
   function enable(img) {
     img.classList.add('active');
     footer.textContent = img.title || 'untitled';
   }
 
+  // Make the given image no longer active
   function disable(img) {
     img.classList.remove('active');
   }
 
+  // Show the next photo
   function next() {
     var nextImg = activeImg.nextSibling || document.querySelector('#images img:first-child');
     disable(activeImg);
@@ -39,15 +58,13 @@
     activeImg = nextImg;
   };
 
+  // Show the previous photo
   function prev() {
     var prevImg = activeImg.previousSibling || document.querySelector('#images img:last-child');
     disable(activeImg);
     enable(prevImg);
     activeImg = prevImg;
   }
-
-  var body = document.body;
-  document.body.appendChild(script);
 
   var LEFT = 37,
     UP = 38,
