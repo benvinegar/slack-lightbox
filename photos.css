@@ -42,8 +42,7 @@ body {
   margin: 100px auto;
 }
 
-/* Borrowed from:; */
-/* http://tobiasahlin.com/spinkit/ */
+/* Loading spinner CSS borrowed from http://tobiasahlin.com/spinkit/ */
 
 .spinner {
   top: 50%;

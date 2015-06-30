@@ -1,3 +1,16 @@
+/**
+ * photos.js
+ *
+ * Prepared for Slack by Ben Vinegar (6/29/2015)
+ *
+ * Other things I would've done:
+ *  - predownload the next and previous photos
+ *  - load best-fit image based on window size (e.g. large for > 1600px, 
+ *    medium for > 1024px)
+ *  - don't queue up photo cycles when navigating quickly (e.g. loads photos
+ *    that may never get shown because user skips over them)
+ * 
+ */
 (function (window, document) {
 
   var footer = document.getElementById('footer'),
@@ -26,8 +39,7 @@
 
         var img = document.createElement('img');
         img.title = photo.title;
-        img.setAttribute('data-src', 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + 
-          photo.id + '_' + photo.secret + '_b.jpg');
+        img.setAttribute('data-src', generateFlickrImgUrl(photo, 'b'));
 
         var target = document.querySelector('#images');
         target.appendChild(img);
@@ -38,6 +50,11 @@
 
     document.body.appendChild(script);
   })();
+
+  function generateFlickrImgUrl(photo, size) {
+    return 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + 
+      photo.id + '_' + photo.secret + '_' + size + '.jpg';
+  };
 
   // Make the given image the "active" image
   function transition(img) {
