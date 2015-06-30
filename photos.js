@@ -22,11 +22,14 @@
 
     // Request is made using JSONP; append script element with src attribute
     // pointing at the Flickr API w/ request parameters
+
+    // Photos by Holley + Chris Melton (CC)
+    // https://www.flickr.com/photos/chrisandholley/sets/72157635051104082
     var script = document.createElement('script');
     script.src = 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos' +
       '&per_page=20&page=1' +
-      '&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635257111822' +
-      '&user_id=69711006%40N07&format=json';
+      '&api_key=93e1a89eb69715e399bb441a590931e0&photoset_id=72157635051104082' +
+      '&format=json';
 
     // Declare global "jsonFlickrAPI"; the response script returned from the Flickr's servers
     // will call this function with the API response payload
