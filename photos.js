@@ -26,45 +26,46 @@
 
         var img = document.createElement('img');
         img.title = photo.title;
-        img.src = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + 
-          photo.id + '_' + photo.secret + '_b.jpg';
+        img.setAttribute('data-src', 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + 
+          photo.id + '_' + photo.secret + '_b.jpg');
 
         var target = document.querySelector('#images');
         target.appendChild(img);
       });
 
-      activeImg = document.querySelector('img');
-      enable(activeImg);
+      transition(document.querySelector('img'));
     }
 
     document.body.appendChild(script);
   })();
 
   // Make the given image the "active" image
-  function enable(img) {
+  function transition(img) {
+    if (!img.loaded) {
+      img.src = img.getAttribute('data-src');
+      return void img.addEventListener('load', function onload() {
+        setTimeout(function () {
+          img.loaded = true;
+          img.removeEventListener('load', onload);
+          transition(img);
+        }, 14);
+      });
+    }
+
     img.classList.add('active');
     footer.textContent = img.title || 'untitled';
-  }
-
-  // Make the given image no longer active
-  function disable(img) {
-    img.classList.remove('active');
+    activeImg && activeImg.classList.remove('active');
+    activeImg = img;
   }
 
   // Show the next photo
   function next() {
-    var nextImg = activeImg.nextSibling || document.querySelector('#images img:first-child');
-    disable(activeImg);
-    enable(nextImg);
-    activeImg = nextImg;
+    transition(activeImg.nextSibling || document.querySelector('#images img:first-child'));
   };
 
   // Show the previous photo
   function prev() {
-    var prevImg = activeImg.previousSibling || document.querySelector('#images img:last-child');
-    disable(activeImg);
-    enable(prevImg);
-    activeImg = prevImg;
+    transition(activeImg.previousSibling || document.querySelector('#images img:last-child'));
   }
 
   var LEFT = 37,
