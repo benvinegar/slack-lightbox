@@ -1,7 +1,7 @@
 (function (window, document) {
 
-  var footer = document.querySelector('#footer'),
-
+  var footer = document.getElementById('footer'),
+    loading = document.getElementById('loading'),
     activeImg; // The photo currently being displayed
 
   // Request photos from the Flickr API
@@ -42,9 +42,11 @@
   // Make the given image the "active" image
   function transition(img) {
     if (!img.loaded) {
+      loading.style.display = 'block';
       img.src = img.getAttribute('data-src');
       return void img.addEventListener('load', function onload() {
         setTimeout(function () {
+          loading.style.display = 'none';
           img.loaded = true;
           img.removeEventListener('load', onload);
           transition(img);
