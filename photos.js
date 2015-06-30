@@ -45,12 +45,16 @@
       loading.style.display = 'block';
       img.src = img.getAttribute('data-src');
       return void img.addEventListener('load', function onload() {
+
+        // Wait an additional 50ms before setting image as 'active'.
+        // I find this triggers the transition animation more frequently/
+        // smoothly (without it, sometimes just *appears* without fade-in).
         setTimeout(function () {
+          img.removeEventListener('load', onload);
           loading.style.display = 'none';
           img.loaded = true;
-          img.removeEventListener('load', onload);
           transition(img);
-        }, 14);
+        }, 50);
       });
     }
 
@@ -75,6 +79,7 @@
     RIGHT = 39,
     DOWN = 40;
 
+  // Arrow keys change active photo (left/up - backwards, right/down - forwards)
   document.addEventListener('keyup', function (e) {
     switch (e.keyCode) {
       case LEFT:
@@ -89,6 +94,7 @@
     }
   });
 
+  // Clicking somewhere on the page also advances the photo forwards
   document.body.addEventListener('click', function (e) {
     next();
   });
